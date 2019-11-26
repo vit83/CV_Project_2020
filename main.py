@@ -1,5 +1,6 @@
 import DataViewer
 import os
+import numpy as np
 def main():
     ImagePath = "../busesTrain"
     AnnotationFile = "../annotationsTrain.txt"
