@@ -2,8 +2,8 @@ import DataViewer
 import os
 import numpy as np
 def main():
-    ImagePath = "../busesTrain"
-    AnnotationFile = "../annotationsTrain.txt"
+    ImagePath = "./busesTrain"
+    AnnotationFile = "./annotationsTrain.txt"
     pDV = DataViewer.CDataViewer()
     ImageList = pDV.LoadImages(ImagePath)
     DetectedObjects = pDV.LoadAnnotations(AnnotationFile)
