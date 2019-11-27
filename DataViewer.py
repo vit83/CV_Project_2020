@@ -4,8 +4,9 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from PIL import Image
 import numpy as np
-
+import shutil
 import os
+import OsUtils
 class CDataViewer:
     def __init__(self):
         self.ImageFiles = []
@@ -13,14 +14,8 @@ class CDataViewer:
 
         pass
     def LoadImages(self,ImageDirPath,filetpye = '.JPG'): #to do add support for list of file types and uppercase/lower case invariance
-
-        # r=root, d=directories, f = files
-        for r, d, f in os.walk(ImageDirPath):
-            for file in f:
-                if filetpye in file:
-                    self.ImageFiles.append(os.path.join(r, file))
-        return self.ImageFiles
-
+        self.ImageFiles = OsUtils.GetFilesFromDir(ImageDirPath,filetpye)
+        return  self.ImageFiles
     def LoadAnnotations(self,AnnoFilePath):
         self.AnnotationFile = AnnoFilePath
         with open(AnnoFilePath) as f:
@@ -59,13 +54,25 @@ class CDataViewer:
 
         plt.show()
 
-    def SaveBoxesAsImages(self,file,BoxList,ImageOutPutDir):
+    def SaveBoxesAsImages(self,file,BoxList,ImageOutPutDir,bDisplay = False):
+        i = 1
         for box in BoxList:
             # Create a Rectangle patch
             x = box[0]
             y = box[1]
             w = box[2]
             l = box[3]
-
+            img = cv2.imread(file)
+            crop_img = img[y:y + l, x:x + w]
+            if bDisplay:
+                cv2.imshow("cropped", crop_img)
+                cv2.waitKey(0)
+            FileName = os.path.basename(file)
+            Name , Type = FileName.split('.')
+            Name = Name + '_' + str(i) + '.' + Type
+            Name = ImageOutPutDir + '\\' + Name
+            cv2.imwrite(Name, crop_img)
+            i = i + 1
         pass
+
 
