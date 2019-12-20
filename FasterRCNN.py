@@ -66,6 +66,7 @@ def object_detection_api(img_path, threshold=0.5, rect_th=3, text_size=3, text_t
 # Note: pretrained=True will get the pretrained weights for the model.
 # model.eval() to use the model for inference
 model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
+
 model.eval()
 print(model)
 # Class labels from official PyTorch documentation for the pretrained model
@@ -89,4 +90,4 @@ COCO_INSTANCE_CATEGORY_NAMES = [
 
 
 
-object_detection_api('buses__.JPG', threshold=0.7)
+object_detection_api('test.JPG', threshold=0.4)

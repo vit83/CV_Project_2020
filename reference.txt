@@ -1,0 +1,9 @@
+https://github.com/jwyang/faster-rcnn.pytorch
+https://pytorch.org/tutorials/intermediate/torchvision_tutorial.html
+https://developer.nvidia.com/cuda-gpus#compute
+pip install torch==1.3.0 torchvision==0.4.1 -f https://download.pytorch.org/whl/torch_stable.html
+https://discuss.pytorch.org/t/using-pycharm-to-debug-pytorch-model-on-gce-aws-or-azure/46212/2
+https://imadelhanafi.com/posts/google_colal_server/
+
+https://medium.com/quark-works/ml-cloud-computing-part-2-connecting-pycharm-to-paperspace-f2272b2d528
+https://stackoverflow.com/questions/42703500/best-way-to-save-a-trained-model-in-pytorch
