@@ -1,5 +1,7 @@
 import torch
 import torchvision
+import torchvision.transforms as T
+from PIL import Image
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 #startup code to save estimation time later
 def get_model_instance(num_classes):
@@ -21,6 +23,12 @@ model.load_state_dict(torch.load("busModel.pth"))
 model.to(device)
 model.eval()
 print("done loading model")
-
+print("warming up  model")
+img = Image.open('warmup.JPG')
+transform = T.Compose([T.ToTensor()])
+img = transform(img).to('cuda')
+torch.cuda.synchronize()
+pred = model([img])
+print("model is ready")
 def getModel():
     return model

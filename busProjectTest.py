@@ -188,3 +188,6 @@ def runTest(annFileNameGT, myAnnFileName, busDir , saveDir = None, elapsed = Non
         if(not os.path.exists(saveDir)):
             os.mkdir(saveDir)
     plt.savefig(os.path.join(saveDir,'Results.png'), dpi = 600)
+
+if __name__ == "__main__":
+    runTest('annotationsTrain.txt','myAnnFile.txt', 'busesTrain')

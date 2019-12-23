@@ -1,38 +1,58 @@
-import numpy as np
-import ast
 import os
-
+import Estimator.BusFinder
+import math
+import time
+import multiprocessing as mp
+from multiprocessing import Process
 def run(myAnnFileName, buses):
-	
-    annFileNameGT = os.path.join(os.getcwd(),'annotationsTrain.txt')
-    writtenAnnsLines = {}
-    annFileEstimations = open(myAnnFileName, 'w+')
-    annFileGT = open(annFileNameGT, 'r')
-    writtenAnnsLines['Ground_Truth'] = (annFileGT.readlines())
-
-    for k, line_ in enumerate(writtenAnnsLines['Ground_Truth']):
-
-        line = line_.replace(' ','')
-        imName = line.split(':')[0]
-        anns_ = line[line.index(':') + 1:].replace('\n', '')
-        anns = ast.literal_eval(anns_)
-        if (not isinstance(anns, tuple)):
-            anns = [anns]
-        corruptAnn = [np.round(np.array(x) + np.random.randint(low = 0, high = 100, size = 5)) for x in anns]
-        corruptAnn = [x[:4].tolist() + [anns[i][4]] for i,x in enumerate(corruptAnn)]
-        strToWrite = imName + ':'
-        if(3 <= k <= 5):
-            strToWrite += '\n'
+    ImageDirPath = buses
+    ImageFiles = GetFilesFromDir(ImageDirPath, 'JPG')
+    BoxDict = {}
+    for Image in ImageFiles:
+        print("analyzing: {:s}".format(Image))
+        start = time.time()
+        Boxes = Estimator.BusFinder.get_prediction(Image)
+        end = time.time()
+        elapsed = float(end) - float(start)
+        s = "analysis time is %0.3f seconds" % elapsed
+        print(s)
+        if Boxes:
+            BoxDict[Image] = Boxes
         else:
-            for i, ann in enumerate(corruptAnn):
-                posStr = [str(x) for x in ann]
-                posStr = ','.join(posStr)
-                strToWrite += '[' + posStr + ']'
-                if (i == int(len(anns)) - 1):
-                    strToWrite += '\n'
-                else:
-                    strToWrite += ','
-        annFileEstimations.write(strToWrite)
+            #to do may add adaptive threshold and rerun estimation
+            print("can not find objects in " + Image)
+
+    WriteResults(BoxDict,myAnnFileName)
+
+
+
+def GetFilesFromDir(DirPath, filetpye):
+    Files = []
+    for r, d, f in os.walk(DirPath):
+        for file in f:
+            if filetpye in file.upper():
+                Files.append(os.path.join(r, file))
+    return Files
+
+
+def WriteResults(Results,file):
+    with open(file, 'w+') as result_file:
+        for  imageFullPath, Boxlist  in Results.items():
+            FileName = os.path.basename(imageFullPath)
+            line = FileName + ":"
+            for box in Boxlist:
+                boxString = "[{:d},{:d},{:d},{:d},{:d}],".format(math.ceil(box[0]),math.ceil(box[1]),math.ceil(box[2]),math.ceil(box[3]),1)
+                line += boxString
+            #remove last comma
+            line = line[:-1] + '\n'
+            result_file.writelines(line)
+
+
+
+
+
+    pass
 
 if __name__ == "__main__":
     run('myAnnFile.txt', 'busesTrain')
+
