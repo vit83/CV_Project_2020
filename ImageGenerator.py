@@ -24,8 +24,8 @@ def main():
     pass
     print("finished extracting data")
     print("begining data augmentation")
-    pDA.rotate(OutImgPath, OutImgPath)
-    pDA.flip(OutImgPath,OutImgPath)
+    #pDA.rotate(OutImgPath, OutImgPath)
+    #pDA.flip(OutImgPath,OutImgPath)
     print("finished data augmentation")
 if __name__ == "__main__":
     main()

@@ -2,8 +2,6 @@ import os
 import Estimator.BusFinder
 import math
 import time
-import multiprocessing as mp
-from multiprocessing import Process
 def run(myAnnFileName, buses):
     ImageDirPath = buses
     ImageFiles = GetFilesFromDir(ImageDirPath, 'JPG')
@@ -16,7 +14,7 @@ def run(myAnnFileName, buses):
         elapsed = float(end) - float(start)
         s = "analysis time is %0.3f seconds" % elapsed
         print(s)
-        if Boxes:
+        if Boxes.size != 0:
             BoxDict[Image] = Boxes
         else:
             #to do may add adaptive threshold and rerun estimation
@@ -41,7 +39,7 @@ def WriteResults(Results,file):
             FileName = os.path.basename(imageFullPath)
             line = FileName + ":"
             for box in Boxlist:
-                boxString = "[{:d},{:d},{:d},{:d},{:d}],".format(math.ceil(box[0]),math.ceil(box[1]),math.ceil(box[2]),math.ceil(box[3]),1)
+                boxString = "[{:d},{:d},{:d},{:d},{:d}],".format(math.ceil(box[0]),math.ceil(box[1]),math.ceil(box[2]),math.ceil(box[3]),math.ceil(box[4]))
                 line += boxString
             #remove last comma
             line = line[:-1] + '\n'
