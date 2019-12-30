@@ -43,14 +43,8 @@ def get_prediction(img_path):
     for Box in detectedBoxes:
         Box = (np.ceil(Box)).astype(int)
         DetectedObject = img[:,Box[1]:(Box[1]+Box[3]),Box[0]:(Box[0]+Box[2])]
-
-        #DetectedObjectCpu = DetectedObject.to('cpu').permute(1, 2, 0).numpy()
         DetectedImg = (T.ToPILImage()(DetectedObject.cpu())).resize((224,224))
-        #np.asarray(DetectedImg).reshape((224,224,3))
-        img_tensor = np.expand_dims(DetectedImg, axis=0)
-        img_tensor2 = img_tensor /  255.0
-        pred = ColorModel.predict(img_tensor2)
-        color = np.argmax(pred) + 1
+        color = get_color(DetectedImg)
         Box = np.append(Box,color)
         detectedBoxesWithColor[i] = Box
         i = i + 1
@@ -62,22 +56,12 @@ def get_prediction(img_path):
     return (detectedBoxesWithColor)
 
 
-def load_image4Color(img_path,rows,cols,show=False):
-
-    img = image.load_img(img_path, target_size=(rows, cols))
-    img_tensor = image.img_to_array(img)                    # (height, width, channels)
-    img_tensor = np.expand_dims(img_tensor, axis=0)         # (1, height, width, channels), add a dimension because the model expects this shape: (batch_size, height, width, channels)
-    img_tensor /= 255.                                      # imshow expects values in the range [0, 1]
-
-    if show:
-        plt.imshow(img_tensor[0])
-        plt.axis('off')
-        plt.show()
-
-    return img_tensor
-
-def get_color(img_path,detectedBoxes):
-
-    pass
+def get_color(DetectedImg):
+    ColorModel = getColorClassificationModel()
+    img_tensor = np.expand_dims(DetectedImg, axis=0)
+    img_tensor2 = img_tensor / 255.0
+    pred = ColorModel.predict(img_tensor2)
+    color = np.argmax(pred) + 1
+    return color
 
 
