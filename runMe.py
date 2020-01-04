@@ -14,7 +14,9 @@ def run(myAnnFileName, buses):
         elapsed = float(end) - float(start)
         s = "analysis time is %0.3f seconds" % elapsed
         print(s)
-        if Boxes.size != 0:
+        if (Boxes is None):
+            print("can not find objects in " + Image)
+        elif Boxes.size != 0:
             BoxDict[Image] = Boxes
         else:
             #to do may add adaptive threshold and rerun estimation

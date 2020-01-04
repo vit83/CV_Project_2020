@@ -19,6 +19,8 @@ def main():
 
     ImagePath = "./busesTrain"
     AnnotationFile = "./annotationsTrainOneClass.txt"
+    #ImagePath = "./BusesAug"
+    #AnnotationFile = "./annotationsTrainAug.txt"
     pDV = DataViewer.CDataViewer()
     ImageList = pDV.LoadImages(ImagePath)
     Labels = pDV.LoadAnnotations(AnnotationFile)
@@ -70,7 +72,7 @@ def main():
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,step_size=3,gamma=0.1)
 
     # let's train it for 10 epochs
-    num_epochs = 10
+    num_epochs = 4
 
     for epoch in range(num_epochs):
         # train for one epoch, printing every 10 iterations
@@ -79,7 +81,9 @@ def main():
         lr_scheduler.step()
         # evaluate on the test dataset
         evaluate(model, data_loader_test, device=device)
-    torch.save(model.state_dict(), "busModel.pth")
+        saveStr = "busModelV2" + str(epoch) + ".ptn"
+        torch.save(model.state_dict(), saveStr)
+    torch.save(model.state_dict(), "busModelV2.pth")
     print("That's it!")
 
 class BussesDataset(torch.utils.data.Dataset):

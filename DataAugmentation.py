@@ -2,6 +2,9 @@ import cv2
 import numpy as np
 import OsUtils
 import os
+
+import imgaug as ia
+import imgaug.augmenters as iaa
 class CDataAugmentation:
     def __init__(self):
         pass

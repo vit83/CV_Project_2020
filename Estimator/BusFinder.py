@@ -3,17 +3,17 @@ from . import getDetectionModel , getColorClassificationModel
 import torch
 import torchvision.transforms as T
 import numpy as np
-import webcolors
-import pandas as pd
 from matplotlib import pyplot as plt
-from keras.preprocessing import image
+
 def get_prediction(img_path):
 
     threshold = 0.8
     DetectionModel = getDetectionModel()
-    ColorModel = getColorClassificationModel()
     img = Image.open(img_path)
     print(img.size)
+    #plt.imshow(img)
+    #plt.show()
+
     #img2 = img.copy() #40 ms
     transform = T.Compose([T.ToTensor()])
     img = transform(img).to('cuda')

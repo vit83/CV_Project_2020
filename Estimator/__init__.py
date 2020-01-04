@@ -32,7 +32,8 @@ torch.cuda.synchronize()
 pred = DetectionModel([img])
 print("model is ready")
 print("loading color classification model")
-ColorModel = load_model('color_model.h5')
+#ColorModel = load_model('color_model.h5')
+ColorModel = load_model("color_modelV2.hdf5")
 print("model is ready")
 def getDetectionModel():
     return DetectionModel
