@@ -24,7 +24,7 @@ print("loading detection model")
 #DetectionModel.load_state_dict(torch.load("busModelV7.pth")) # 89
 #DetectionModel.load_state_dict(torch.load("busModel.pth")) # 11 garbage
 #DetectionModel.load_state_dict(torch.load("busModelV2.pth")) # 11 garbage
-DetectionModel.load_state_dict(torch.load("busModelV9.pth")) # 89
+DetectionModel.load_state_dict(torch.load("busModelV9.pth")) # 97 best one
 DetectionModel.to(device)
 DetectionModel.eval()
 print("done loading model")
@@ -38,7 +38,7 @@ print("model is ready")
 print("loading color classification model")
 #ColorModel = load_model("color_modelV2.hdf5") %60
 #ColorModel = load_model("color_modelv12.h5") #90% f1
-ColorModel = load_model("color_modelv14.h5") # 89 but i like it better
+ColorModel = load_model("color_modelv14.h5") # 89 but i like it better , best one
 #ColorModel = load_model("color_modelV7.hdf5") #88 %
 print("model is ready")
 def getDetectionModel():

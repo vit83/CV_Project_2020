@@ -61,7 +61,7 @@ def main():
 
     # get the model using our helper function
     model = get_model_instance(num_classes)
-
+    print(model)
     # move model to the right device
     model.to(device)
 

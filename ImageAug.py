@@ -31,11 +31,19 @@ def main():
     y1Offset = -20
     x2Offset = 20
     y2Offset = 20
+
+
+    x1Offset = 0
+    y1Offset = 0
+    x2Offset = 0
+    y2Offset = 0
+
+
     LabelsDictAug = GetBoundingBoxAndLabel(LabelsDict,x1Offset,y1Offset,x2Offset,y2Offset)
 
 
     #ia.seed(1)
-    NumberOfAugRuns = 10
+    NumberOfAugRuns = 2
     seq = iaa.Sequential([
         #iaa.Affine(rotate=(-90, 90)),
         #iaa.AdditiveGaussianNoise(scale=(10, 60)),
