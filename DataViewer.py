@@ -65,13 +65,15 @@ class CDataViewer:
             label = box[4]
             img = cv2.imread(file)
             crop_img = img[y:y + l, x:x + w]
+            if crop_img.size == 0:
+                continue
             if bDisplay:
                 cv2.imshow("cropped", crop_img)
                 cv2.waitKey(0)
             FileName = os.path.basename(file)
             Name , Type = FileName.split('.')
             Name = str(label)+'_' + Name + '_' + str(label) + '.' + Type
-            Name = ImageOutPutDir + '\\' + Name
+            Name = ImageOutPutDir + '\\' + str(label) +"\\"+ Name
             cv2.imwrite(Name, crop_img)
             i = i + 1
         pass

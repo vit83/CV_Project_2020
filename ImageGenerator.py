@@ -4,13 +4,15 @@ import os
 import numpy as np
 import OsUtils
 def main():
-    ImagePath = "./busesTrain"
-    AnnotationFile = "./annotationsTrain.txt"
+    ImagePath = "./busesAug"
+    AnnotationFile = "./annotationsTestAug.txt"
     OutImgPath = "./BusesOnly"
     pDV = DataViewer.CDataViewer()
     pDA = DataAugmentation.CDataAugmentation()
     OsUtils.remove(OutImgPath)
     os.mkdir(OutImgPath)
+    for label in range (1,7):
+        os.mkdir(OutImgPath + "\\"+str(label))
     ImageList = pDV.LoadImages(ImagePath)
     DetectedObjects = pDV.LoadAnnotations(AnnotationFile)
     print("extracting data")
@@ -29,3 +31,4 @@ def main():
     print("finished data augmentation")
 if __name__ == "__main__":
     main()
+    print("done")

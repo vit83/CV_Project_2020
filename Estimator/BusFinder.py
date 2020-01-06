@@ -60,7 +60,9 @@ def get_color(DetectedImg):
     ColorModel = getColorClassificationModel()
     img_tensor = np.expand_dims(DetectedImg, axis=0)
     img_tensor2 = img_tensor / 255.0
+    #img_tensor2 = img_tensor
     pred = ColorModel.predict(img_tensor2)
+    print(pred)
     color = np.argmax(pred) + 1
     return color
 

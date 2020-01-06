@@ -53,6 +53,7 @@ class IMAGE:
         plt.close()
 
 def IOU(boxAList, boxBList):
+    #annsGT, annsE
     Th = 0.69
     iou = []
     matches = {}
